@@ -13,17 +13,51 @@ public sealed class FileStorageRepository(string filePath) : ICustomerRepository
 
     public ResponseResult AddCustomer(Customer customer)
     {
+        try
+        {
+            var result = JsonFormatter.SerializeObject(customer);
+            File.WriteAllText(_filePath, result);
 
-        var result = JsonFormatter.SerializeObject(customer);
-
-        File.WriteAllText(_filePath, result);
-
-        throw new NotImplementedException();
+            return new ResponseResult
+            {
+                IsSuccess = true,
+                Message = "Customer added successfully."
+            };
+        }
+        catch
+        {
+            return new ResponseResult
+            {
+                IsSuccess = false,
+                Message = "An error occurred while adding the customer."
+            };
+        }
     }
 
     public ResponseResultObject<IEnumerable<Customer>> GetAllCustomers()
     {
-        throw new NotImplementedException();
+        try
+        {
+            var json = File.ReadAllText(_filePath);
+
+            var customers = JsonFormatter.DeserializeObject<IEnumerable<Customer>>(json);
+
+            return new ResponseResultObject<IEnumerable<Customer>>
+            {
+                IsSuccess = true,
+                Message = "Customers retrieved successfully.",
+                Data = customers
+            };
+        }
+        catch
+        {
+            return new ResponseResultObject<IEnumerable<Customer>>
+            {
+                IsSuccess = false,
+                Message = "An error occurred while retrieving customers.",
+                Data = []
+            };
+        }
     }
 
     public ResponseResultObject<Customer> GetCustomerByEmail(string email)

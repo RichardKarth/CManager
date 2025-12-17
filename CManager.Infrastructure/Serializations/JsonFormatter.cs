@@ -17,9 +17,7 @@ public class JsonFormatter
 
     public static string SerializeObject<T>(T content)
     {
-        var json = JsonSerializer.Serialize(content, _options);
-
-        return json;
+        return JsonSerializer.Serialize(content, _options);
     }
 
     public static T? DeserializeObject<T>(string json)
