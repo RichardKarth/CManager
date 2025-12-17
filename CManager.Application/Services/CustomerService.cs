@@ -9,6 +9,7 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
 {
 
     private readonly ICustomerRepository _customerRepository = customerRepository;
+    private List<Customer> _customers = [];
 
     public ResponseResult AddCustomer(CustomerRequest customer)
     {
