@@ -94,7 +94,7 @@ public sealed class FileStorageRepository(string filePath) : ICustomerRepository
             
             UpdateCustomerList();
 
-            var deletedCustomer = _customers?.FirstOrDefault(c => c.Id == customer.Id);
+            var deletedCustomer = _customers.FirstOrDefault(c => c.Id == customer.Id);
 
             if (deletedCustomer == null)
             {
