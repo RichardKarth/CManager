@@ -9,16 +9,16 @@ namespace CManager.Application.Interfaces
     {
         ResponseResultObject<IEnumerable<Customer>> GetAllCustomers();
 
-        ResponseResult SaveAllCustomers(IEnumerable<Customer> customers);
-
         ResponseResult AddCustomer(Customer customer);
 
         ResponseResultObject<Customer> GetCustomerByEmail(CustomerRequest customer);
 
+
         ResponseResult RemoveCustomerById(Customer customer);
 
-        ResponseResult UpdateCustomerList();
+        void UpdateCustomerList();
 
+        void SaveAllCustomers(List<Customer> customers);
 
     }
 }

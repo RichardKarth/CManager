@@ -16,8 +16,9 @@ public sealed class FileStorageRepository(string filePath) : ICustomerRepository
     {
         try
         {
-            var result = JsonFormatter.SerializeObject(customer);
-            File.WriteAllText(_filePath, result);
+            UpdateCustomerList();
+            _customers.Add(customer);
+            SaveAllCustomers(_customers);
 
             return new ResponseResult
             {
@@ -90,48 +91,64 @@ public sealed class FileStorageRepository(string filePath) : ICustomerRepository
     {
         try
         {
-            var json = File.ReadAllText(_filePath);
+            
+            UpdateCustomerList();
 
-            var customers = JsonFormatter.DeserializeObject<IEnumerable<Customer>>(json);
+            var deletedCustomer = _customers?.FirstOrDefault(c => c.Id == customer.Id);
 
-            var deletedCustomer = customers?.FirstOrDefault(c => c.Id == customer.Id);
+            if (deletedCustomer == null)
+            {
+                return new ResponseResult
+                {
+                    IsSuccess = false,
+                    Message = "Customer not found.",
+                };
+            }
+            _customers.Remove(deletedCustomer);
+            SaveAllCustomers(_customers);
 
-
-
-
-
-
-            return new ResponseResultObject<Customer>
+            return new ResponseResult
             {
                 IsSuccess = true,
-                Message = "Customers retrieved successfully.",
-                Data = customers?.FirstOrDefault(c => c.Email.Equals(customer.Email))
+                Message = "Customer deleted successfully.",
             };
         }
         catch
         {
-            return new ResponseResultObject<Customer>
+            return new ResponseResult
             {
                 IsSuccess = false,
-                Message = "An error occurred while retrieving the customer.",
+                Message = "An error occurred while deleting the customer.",
             };
         }
     }
 
-    public ResponseResult SaveAllCustomers(IEnumerable<Customer> customers)
+    public void SaveAllCustomers(List<Customer> customers)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var result = JsonFormatter.SerializeObject(customers);
+            File.WriteAllText(_filePath, result);
+        }
+        catch
+        {
+            throw new Exception("An error occurred while saving customers.");
+        }
+
     }
 
-    public ResponseResult UpdateCustomerList()
+    public void UpdateCustomerList()
     {
-        var json = File.ReadAllText(_filePath);
+        try
+        {
+            var json = File.ReadAllText(_filePath);
+            var customers = JsonFormatter.DeserializeObject<List<Customer>>(json);  
+            _customers = customers ?? new List<Customer>();
+        }
+        catch
+        {
+            _customers = new List<Customer>();
+        }
 
-        var customers = JsonFormatter.DeserializeObject<List<Customer>>(json);
-
-        
-        _customers = customers ?? new List<Customer>();
-
-        throw new NotImplementedException();
     }
 }
