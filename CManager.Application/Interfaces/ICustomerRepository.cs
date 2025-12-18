@@ -13,9 +13,11 @@ namespace CManager.Application.Interfaces
 
         ResponseResult AddCustomer(Customer customer);
 
-        ResponseResultObject<Customer> GetCustomerByEmail(string email);
+        ResponseResultObject<Customer> GetCustomerByEmail(CustomerRequest customer);
 
-        ResponseResult RemoveCustomerById(string id);
+        ResponseResult RemoveCustomerById(Customer customer);
+
+        ResponseResult UpdateCustomerList();
 
 
     }

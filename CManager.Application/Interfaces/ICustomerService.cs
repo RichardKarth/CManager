@@ -9,10 +9,10 @@ namespace CManager.Application.Interfaces
     {
         ResponseResult AddCustomer(CustomerRequest customer);
 
-        ResponseResultObject<Customer> GetCustomerByEmail(string email);
+        ResponseResultObject<Customer> GetCustomerByEmail(CustomerRequest customer);
 
         ResponseResultObject<IEnumerable<Customer>> GetAllCustomers();
 
-        ResponseResult RemoveCustomerById(string id);
+        ResponseResult RemoveCustomerById(CustomerRequest customer);
     }
 }

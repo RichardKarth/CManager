@@ -10,6 +10,7 @@ public sealed class FileStorageRepository(string filePath) : ICustomerRepository
 {
 
     private readonly string _filePath = filePath;
+    private List<Customer> _customers = [];
 
     public ResponseResult AddCustomer(Customer customer)
     {
@@ -60,18 +61,77 @@ public sealed class FileStorageRepository(string filePath) : ICustomerRepository
         }
     }
 
-    public ResponseResultObject<Customer> GetCustomerByEmail(string email)
+    public ResponseResultObject<Customer> GetCustomerByEmail(CustomerRequest customer)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var json = File.ReadAllText(_filePath);
+
+            var customers = JsonFormatter.DeserializeObject<IEnumerable<Customer>>(json);
+
+            return new ResponseResultObject<Customer>
+            {
+                IsSuccess = true,
+                Message = "Customers retrieved successfully.",
+                Data = customers?.FirstOrDefault(c => c.Email.Equals(customer.Email))
+            };
+        }
+        catch
+        {
+            return new ResponseResultObject<Customer>
+            {
+                IsSuccess = false,
+                Message = "An error occurred while retrieving the customer.",
+            };
+        }
     }
 
-    public ResponseResult RemoveCustomerById(string id)
+    public ResponseResult RemoveCustomerById(Customer customer)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var json = File.ReadAllText(_filePath);
+
+            var customers = JsonFormatter.DeserializeObject<IEnumerable<Customer>>(json);
+
+            var deletedCustomer = customers?.FirstOrDefault(c => c.Id == customer.Id);
+
+
+
+
+
+
+            return new ResponseResultObject<Customer>
+            {
+                IsSuccess = true,
+                Message = "Customers retrieved successfully.",
+                Data = customers?.FirstOrDefault(c => c.Email.Equals(customer.Email))
+            };
+        }
+        catch
+        {
+            return new ResponseResultObject<Customer>
+            {
+                IsSuccess = false,
+                Message = "An error occurred while retrieving the customer.",
+            };
+        }
     }
 
     public ResponseResult SaveAllCustomers(IEnumerable<Customer> customers)
     {
+        throw new NotImplementedException();
+    }
+
+    public ResponseResult UpdateCustomerList()
+    {
+        var json = File.ReadAllText(_filePath);
+
+        var customers = JsonFormatter.DeserializeObject<List<Customer>>(json);
+
+        
+        _customers = customers ?? new List<Customer>();
+
         throw new NotImplementedException();
     }
 }
