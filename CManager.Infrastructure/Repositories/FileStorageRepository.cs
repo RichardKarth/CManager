@@ -2,11 +2,10 @@
 using CManager.Application.Interfaces;
 using CManager.Domain.Models;
 using CManager.Infrastructure.Serializations;
-using System.Text.Json;
 
 namespace CManager.Infrastructure.Repositories;
 
-public sealed class FileStorageRepository(string filePath) : ICustomerRepository
+public class FileStorageRepository(string filePath) : ICustomerRepository
 {
 
     private readonly string _filePath = filePath;
@@ -62,7 +61,7 @@ public sealed class FileStorageRepository(string filePath) : ICustomerRepository
         }
     }
 
-    public ResponseResultObject<Customer> GetCustomerByEmail(CustomerRequest customer)
+    public ResponseResultObject<Customer> GetCustomerByEmail(string email)
     {
         try
         {
@@ -74,7 +73,7 @@ public sealed class FileStorageRepository(string filePath) : ICustomerRepository
             {
                 IsSuccess = true,
                 Message = "Customers retrieved successfully.",
-                Data = customers?.FirstOrDefault(c => c.Email.Equals(customer.Email))
+                Data = customers?.FirstOrDefault(c => c.Email.Equals(email))
             };
         }
         catch
@@ -87,14 +86,14 @@ public sealed class FileStorageRepository(string filePath) : ICustomerRepository
         }
     }
 
-    public ResponseResult RemoveCustomerById(Customer customer)
+    public ResponseResult RemoveCustomerByEmail(string customer)
     {
         try
         {
             
             UpdateCustomerList();
 
-            var deletedCustomer = _customers.FirstOrDefault(c => c.Id == customer.Id);
+            var deletedCustomer = _customers.FirstOrDefault(c => c.Email == customer);
 
             if (deletedCustomer == null)
             {
@@ -141,6 +140,15 @@ public sealed class FileStorageRepository(string filePath) : ICustomerRepository
     {
         try
         {
+            EnsureDirectoryExists();
+
+            if (!File.Exists(_filePath))
+            {
+                _customers = new List<Customer>();
+                return;
+            }
+
+
             var json = File.ReadAllText(_filePath);
             var customers = JsonFormatter.DeserializeObject<List<Customer>>(json);  
             _customers = customers ?? new List<Customer>();
@@ -150,5 +158,15 @@ public sealed class FileStorageRepository(string filePath) : ICustomerRepository
             _customers = new List<Customer>();
         }
 
+    }
+
+
+    // Denna metod skrevs helt av chatGPT, den kollar så att katalogen för filvägen finns, om inte skapas den.
+
+    private void EnsureDirectoryExists()
+    {
+        var dir = Path.GetDirectoryName(_filePath);
+        if (!string.IsNullOrWhiteSpace(dir) && !Directory.Exists(dir))
+            Directory.CreateDirectory(dir);
     }
 }

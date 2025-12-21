@@ -50,16 +50,16 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
         return responseResultObject;
     }
 
-    public ResponseResultObject<Customer> GetCustomerByEmail(CustomerRequest customer)
+    public ResponseResultObject<Customer> GetCustomerByEmail(string email)
     {
-        var responseResultObject = _customerRepository.GetCustomerByEmail(customer);
+        var responseResultObject = _customerRepository.GetCustomerByEmail(email);
         return responseResultObject;
     }
 
-    public ResponseResult RemoveCustomerById(CustomerRequest customer)
+    public ResponseResult RemoveCustomerByEmail(string customer)
     {
-        var createdCustomer = CustomerFactory.Create(customer);
-        var responseResult = _customerRepository.RemoveCustomerById(createdCustomer);
+        
+        var responseResult = _customerRepository.RemoveCustomerByEmail(customer);
         return responseResult;
     }
 }
