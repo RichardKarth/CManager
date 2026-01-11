@@ -14,5 +14,7 @@ namespace CManager.Application.Interfaces
         ResponseResultObject<IEnumerable<Customer>> GetAllCustomers();
 
         ResponseResult RemoveCustomerByEmail(string customer);
+
+        ResponseResult UpdateCustomer(Customer customer);
     }
 }

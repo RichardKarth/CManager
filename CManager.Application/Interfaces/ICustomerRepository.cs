@@ -16,7 +16,7 @@ namespace CManager.Application.Interfaces
 
         ResponseResult RemoveCustomerByEmail(string customer);
 
-        void UpdateCustomerList();
+        ResponseResult UpdateCustomer(Customer customer);
 
         void SaveAllCustomers(List<Customer> customers);
 
