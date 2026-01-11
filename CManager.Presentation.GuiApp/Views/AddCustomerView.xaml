@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="CManager.Presentation.GuiApp.Views.AddCustomerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CManager.Presentation.GuiApp.Views"
+             mc:Ignorable="d" 
+             
+             
+             
+             xmlns:viewModels="clr-namespace:CManager.Presentation.GuiApp.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewModels:AddCustomerViewModel}"
+             
+             d:DesignHeight="560" d:DesignWidth="400"
+             >
+
+    <Border Background="#2A2A2A" CornerRadius="25">
+        <Grid Margin="50 0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0">
+                <TextBlock Text="{Binding Title, FallbackValue='Add New Customer'}" Style="{StaticResource TitleText}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Row="1">
+                <TextBlock Text="FirstName" Style="{StaticResource LabelText}"></TextBlock>
+                <TextBox Text="{Binding Customer.FirstName}"></TextBox>
+                <TextBlock Text="LastName" Style="{StaticResource LabelText}" ></TextBlock>
+                <TextBox Text="{Binding Customer.LastName}"></TextBox>
+                <TextBlock Text="Email" Style="{StaticResource LabelText}" ></TextBlock>
+                <TextBox Text="{Binding Customer.Email}"></TextBox>
+                <TextBlock Text="PhoneNumber" Style="{StaticResource LabelText}" ></TextBlock>
+                <TextBox Text="{Binding Customer.PhoneNumber}"></TextBox>
+                
+                
+            </StackPanel>
+
+            
+                        
+                    
+            <Grid Grid.Row="2">
+                <Button Grid.Row="3" x:Name="AddCustomer" Style="{StaticResource AddButton}" Content="Add New Customer" Width="200" Height="30" HorizontalAlignment="Center" Command="{Binding AddCustomerCommand}">
+                </Button>
+            </Grid>
+            
+            
+            
+            <Button Grid.Row="3" Style="{StaticResource CancelButton}" Content="Go Back" Margin="20" Command="{Binding BackToMenuViewCommand}"/>
+        </Grid>
+    </Border>
+
+</UserControl>

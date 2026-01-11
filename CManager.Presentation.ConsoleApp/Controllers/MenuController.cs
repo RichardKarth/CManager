@@ -71,9 +71,9 @@ public class MenuController(ICustomerService customerService)
 
             var customerRequest = new CustomerRequest
             {
-                FirstName = firstName,
-                LastName = lastName,
-                Email = email,
+                FirstName = firstName!,
+                LastName = lastName!,
+                Email = email!,
                 PhoneNumber = phoneNumber
             };
             var response = _customerService.AddCustomer(customerRequest);
@@ -103,11 +103,11 @@ public class MenuController(ICustomerService customerService)
                 Console.ReadKey();
                
             }
-            var response = _customerService.GetCustomerByEmail(email);
+            var response = _customerService.GetCustomerByEmail(email!);
 
             var customer = response.Data;
 
-            Console.WriteLine(customer.Id);
+            Console.WriteLine(customer!.Id);
             Console.WriteLine(customer.FirstName);
             Console.WriteLine(customer.LastName);
             Console.WriteLine(customer.Email);
@@ -123,7 +123,7 @@ public class MenuController(ICustomerService customerService)
 
             Console.Write("Enter the email adress of the user you want to remove:");
             var customerEmail = Console.ReadLine();
-            _customerService.RemoveCustomerByEmail(customerEmail);
+            _customerService.RemoveCustomerByEmail(customerEmail!);
 
             Console.ReadKey();
 
@@ -133,7 +133,7 @@ public class MenuController(ICustomerService customerService)
         {
             var customerList = _customerService.GetAllCustomers();
 
-            foreach (var customer in customerList.Data)
+            foreach (var customer in customerList.Data!)
             {
                 Console.WriteLine($"- {customer.FirstName} {customer.LastName}, Email: {customer.Email}, Phone: {customer.PhoneNumber}");
             }

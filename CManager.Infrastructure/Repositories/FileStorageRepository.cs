@@ -136,6 +136,47 @@ public class FileStorageRepository(string filePath) : ICustomerRepository
 
     }
 
+    public ResponseResult UpdateCustomer(Customer customer)
+    {
+        try
+        {
+            UpdateCustomerList();
+
+            var existing = _customers.FirstOrDefault(c => c.Email == customer.Email);
+            if (existing == null)
+            {
+                return new ResponseResult
+                {
+                    IsSuccess = false,
+                    Message = "Customer not found."
+                };
+            }
+
+            existing.FirstName = customer.FirstName;
+            existing.LastName = customer.LastName;
+            existing.PhoneNumber = customer.PhoneNumber;
+            
+
+            SaveAllCustomers(_customers);
+
+            return new ResponseResult
+            {
+                IsSuccess = true,
+                Message = "Customer updated successfully."
+            };
+        }
+        catch
+        {
+            return new ResponseResult
+            {
+                IsSuccess = false,
+                Message = "An error occurred while updating the customer."
+            };
+        }
+    }
+
+
+
     public void UpdateCustomerList()
     {
         try
@@ -169,4 +210,6 @@ public class FileStorageRepository(string filePath) : ICustomerRepository
         if (!string.IsNullOrWhiteSpace(dir) && !Directory.Exists(dir))
             Directory.CreateDirectory(dir);
     }
+
+    
 }

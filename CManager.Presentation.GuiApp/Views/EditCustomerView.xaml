@@ -1,0 +1,81 @@
+﻿<UserControl x:Class="CManager.Presentation.GuiApp.Views.EditCustomerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CManager.Presentation.GuiApp.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="560" d:DesignWidth="400"
+             
+             xmlns:viewModels="clr-namespace:CManager.Presentation.GuiApp.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewModels:EditCustomerViewModel}"
+             
+             >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <TextBlock Grid.Row="0" Text="{Binding Title, FallbackValue='Customer List'}" Style="{StaticResource TitleText}" HorizontalAlignment="Center" Margin="0 10"/>
+        </StackPanel>
+
+        <Border Background="#2A2A2A" CornerRadius="25" Grid.Row="1">
+            
+            <StackPanel Margin="20">
+                <Grid>
+                    
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0">
+                        <TextBlock Text="First Name" Style="{StaticResource LabelText}"></TextBlock>
+                        <TextBlock Text="{Binding Customer.FirstName}" Style="{StaticResource CustomerEditText}"></TextBlock>
+
+                        <TextBlock Text="Last Name" Style="{StaticResource LabelText}"></TextBlock>
+                        <TextBlock Text="{Binding Customer.LastName}"  Style="{StaticResource CustomerEditText}"></TextBlock>
+
+                        <TextBlock Text="Email Name" Style="{StaticResource LabelText}"></TextBlock>
+                        <TextBlock Text="{Binding Customer.Email}"  Style="{StaticResource CustomerEditText}"></TextBlock>
+
+                        <TextBlock Text="Phonenumber" Style="{StaticResource LabelText}"></TextBlock>
+                        <TextBlock Text="{Binding Customer.PhoneNumber}"  Style="{StaticResource CustomerEditText}"></TextBlock>
+                    </StackPanel>
+
+
+
+                    <StackPanel Grid.Row="1" Margin="0 20 0 0">
+                        <TextBlock Text="Edit Customer Details" Style="{StaticResource LabelText}" HorizontalAlignment="Center" Margin="0 0 0 10"/>
+                        <TextBlock Text="First Name" Style="{StaticResource LabelText}"></TextBlock>
+                        <TextBox Text="{Binding Customer.FirstName}"></TextBox>
+                        <TextBlock Text="Last Name" Style="{StaticResource LabelText}"></TextBlock>
+                        <TextBox Text="{Binding Customer.LastName}"></TextBox>
+                        <TextBlock Text="Email Name" Style="{StaticResource LabelText}"></TextBlock>
+                        <TextBox Text="{Binding Customer.Email}"></TextBox>
+                        <TextBlock Text="PhoneNumber Name" Style="{StaticResource LabelText}"></TextBlock>
+                        <TextBox Text="{Binding Customer.PhoneNumber}"></TextBox>
+
+                    </StackPanel>
+
+                </Grid>
+
+                
+
+            </StackPanel>
+
+        </Border>
+
+        <Grid Grid.Row="2">
+            <Button Grid.Row="3" x:Name="AddCustomer" Style="{StaticResource AddButton}" Content="Save Changes" Width="200" Height="30" HorizontalAlignment="Center" Command="{Binding SaveChangesCommand}" Margin="0 12">
+            </Button>
+        </Grid>
+
+        <Button Grid.Row="3" Style="{StaticResource CancelButton}" Content="Go Back" Margin="0 0 0 20" Command="{Binding BackToMenuViewCommand}"></Button>
+
+    </Grid>
+</UserControl>

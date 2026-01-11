@@ -62,4 +62,24 @@ public class CustomerService(ICustomerRepository customerRepository) : ICustomer
         var responseResult = _customerRepository.RemoveCustomerByEmail(customer);
         return responseResult;
     }
+
+    public ResponseResult UpdateCustomer(Customer customer)
+    {
+        var checkOutCustomer = _customerRepository.GetCustomerByEmail(customer.Email);
+
+
+        if(checkOutCustomer.Data.Email == customer.Email)
+        {
+            var responseResult = _customerRepository.UpdateCustomer(customer);
+            return responseResult;
+        }
+
+
+        return new ResponseResult
+        {
+            IsSuccess = false,
+            Message = "Customer not found."
+        };
+
+    }
 }
