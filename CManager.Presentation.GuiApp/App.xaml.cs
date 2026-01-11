@@ -43,6 +43,9 @@ public partial class App : System.Windows.Application
             services.AddTransient<DeleteCustomerViewModel>();
             services.AddTransient<DeleteCustomerView>();
 
+            services.AddTransient<SpecificCustomerViewModel>();
+            services.AddTransient<SpecificCustomerView>();
+
 
 
 

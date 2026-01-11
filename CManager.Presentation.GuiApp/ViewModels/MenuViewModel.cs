@@ -40,4 +40,10 @@ public partial class MenuViewModel : ObservableObject
         var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
         mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<DeleteCustomerViewModel>();
     }
+    [RelayCommand]
+    private void OpenSpecificCustomerView()
+    {
+        var mainViewModel = _serviceProvider.GetRequiredService<MainViewModel>();
+        mainViewModel.CurrentViewModel = _serviceProvider.GetRequiredService<SpecificCustomerViewModel>();
+    }
 }

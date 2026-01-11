@@ -64,6 +64,10 @@
                         <views:DeleteCustomerView/>
                     </DataTemplate>
 
+                    <DataTemplate DataType="{x:Type viewModels:SpecificCustomerViewModel}">
+                        <views:SpecificCustomerView/>
+                    </DataTemplate>
+
                 </ContentControl.Resources>
             </ContentControl>
         </Grid>
